@@ -1,7 +1,9 @@
 import tornado
-
 import tornado.ioloop
 import tornado.web
+import os
+
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 class MainHandler(tornado.web.RequestHandler):
     def initialize(self, w):
@@ -34,7 +36,7 @@ class Wordle(object):
         self.blacklist = ""
         self.position_whitelist = ["","","","",""]
         self.position_blacklist = ["","","","",""]
-        with open("all5") as f:
+        with open("%s/all5" % __location__) as f:
             whitelist = ""
             for line in f.readlines():
                 word = line[:5].lower()
@@ -43,7 +45,7 @@ class Wordle(object):
 
     def load_frequencies(self):
         self.freq = {}
-        with open("unigram_freq.csv") as f:
+        with open("%s/unigram_freq.csv" % __location__) as f:
             for line in f.readlines():
                 word, f = line.strip().split(',')
                 if len(word) == 5:
