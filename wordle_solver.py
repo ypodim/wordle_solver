@@ -94,7 +94,7 @@ if __name__ == "__main__":
         "static_path": "",
     }
     app = tornado.web.Application([
-        (r"/", MainHandler, dict(w=w)),
+        (r"/wordle_solver", MainHandler, dict(w=w)),
     ], **settings)
     app.listen(8888)
     tornado.ioloop.IOLoop.current().start()
