@@ -1,0 +1,54 @@
+
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<style>	
+</style> 
+
+<form method="GET" id="my_form"></form>
+
+<table>
+    <tbody>
+        <tr style="background-color: #8e8e8e;">
+        	<th>Does not contain: </th>
+        	<th><input name="blacklist"/></th>
+        </tr>
+        <tr>
+        	<th style="background: repeating-linear-gradient(45deg,#e9c601,#e9c601 5px,#e9be01 0,#e9be01 10px);">Wrong positions: </th>
+            <th><input name="b1"/></th>
+            <th><input name="b2"/></th>
+            <th><input name="b3"/></th>
+            <th><input name="b4"/></th>
+            <th><input name="b5"/></th>
+        </tr>
+    	<tr>
+        	<th style="background-color: #57ac57;">Must contain: </th>
+            <th><input name="w1"/></th>
+            <th><input name="w2"/></th>
+            <th><input name="w3"/></th>
+            <th><input name="w4"/></th>
+            <th><input name="w5"/></th>
+        </tr>
+    </tbody>
+</table>
+<button id="reset">reset</button>
+<div>Results:
+<div id="results"></div>
+</div>
+<script>
+$(document).ready(function(){
+	$("input").attr("size","5").attr("type","text").attr("form","my_form")
+	$("input").on("input", function(el){
+		var val = $(this).val();
+		var id = $(this).attr("name");
+		$.post("/", $( "#my_form" ).serialize(), function(res){
+			console.log(res);
+			$("#results").html(res)
+		});
+	})
+	$("#reset").click(function(){
+		$("input").val("");
+	})
+})
+</script>
