@@ -7,7 +7,7 @@ $(document).ready(function(){
     $("input").on("input", function(el){
         var val = $(this).val();
         var id = $(this).attr("name");
-        $.post("/", $( "#my_form" ).serialize(), function(res){
+        $.post("/wordle_solver", $( "#my_form" ).serialize(), function(res){
             console.log(res);
             $("#results").html(res)
         });
