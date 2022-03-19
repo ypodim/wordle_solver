@@ -1,11 +1,31 @@
 
 <head>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("input").attr("size","5").attr("type","text").attr("form","my_form")
+    $("input").on("input", function(el){
+        var val = $(this).val();
+        var id = $(this).attr("name");
+        $.post("/", $( "#my_form" ).serialize(), function(res){
+            console.log(res);
+            $("#results").html(res)
+        });
+    })
+    $("#reset").click(function(){
+        $("input").val("");
+    })
+})
+</script>
+<title>Wordle solver</title>
 </head>
 
 <style>	
+th {text-align: left;}
+body {width: 100%;}
+.bottom {position: absolute; bottom: 0; background-color: #aaa; width: 100%; padding: 3px;}
 </style> 
-
+<body>
 <form method="GET" id="my_form"></form>
 
 <table>
@@ -13,6 +33,7 @@
         <tr style="background-color: #8e8e8e;">
         	<th>Does not contain: </th>
         	<th><input name="blacklist"/></th>
+            <th style="background-color: #ffffff;" colspan="5">eg "ath" to skip words with letters a,t,h.</th>
         </tr>
         <tr>
         	<th style="background: repeating-linear-gradient(45deg,#e9c601,#e9c601 5px,#e9be01 0,#e9be01 10px);">Wrong positions: </th>
@@ -36,19 +57,5 @@
 <div>Results:
 <div id="results"></div>
 </div>
-<script>
-$(document).ready(function(){
-	$("input").attr("size","5").attr("type","text").attr("form","my_form")
-	$("input").on("input", function(el){
-		var val = $(this).val();
-		var id = $(this).attr("name");
-		$.post("/", $( "#my_form" ).serialize(), function(res){
-			console.log(res);
-			$("#results").html(res)
-		});
-	})
-	$("#reset").click(function(){
-		$("input").val("");
-	})
-})
-</script>
+<div class="bottom">Fork this on <a href="https://github.com/ypodim/wordle_solver">github</a></div>
+</body>
